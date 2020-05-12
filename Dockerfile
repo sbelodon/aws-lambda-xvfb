@@ -1,4 +1,4 @@
-FROM 137112412989.dkr.ecr.us-west-2.amazonaws.com/amazonlinux:latest
+FROM amazonlinux:2
 
 RUN  yum group install -y "Development Tools"
 
@@ -37,6 +37,8 @@ RUN wget https://www.x.org/archive/individual/data/xkeyboard-config/xkeyboard-co
 RUN wget https://www.x.org/archive/individual/xserver/xorg-server-1.15.0.tar.gz && \
   tar -xzf xorg-server-1.15.0.tar.gz && \
   cd /app/xorg-server-1.15.0 && \
+  wget https://cgit.freedesktop.org/xorg/xserver/patch/?id=21b896939c5bb242f3aacc37baf12379e43254b6 -O patch.patch && \
+  git apply patch.patch && \
   ./configure \
     --prefix=/usr/local \
     # --enable-glamor=no \
